@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+namespace new_ns
+{
+    class tarun
+    {
+        public :
+            tarun(int k) : x(k) { }
+            int x;
+    };
+}
+
+class tarun
+{
+    public :
+        tarun(int k) : y(k) { }
+        int y;
+};
+
+int main() {
+	// your code goes here
+	tarun obj1(5);
+	new_ns::tarun obj2(9);
+	
+	cout << obj1.y <<endl;
+	cout << obj2.x << endl;
+	return 0;
+}
