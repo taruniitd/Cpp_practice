@@ -1,0 +1,55 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class new1
+{
+    public :
+        int t1;
+        int t2;
+        new1(int t1, int t2)
+        {
+            this->t1 = t1;
+            this->t2 = t2;
+        }
+        new1 operator + (new1 obj)
+        {
+            new1 obj3(0,0);
+            obj3.t1 = this->t1 + obj.t1;
+            obj3.t2 = this->t2 + obj.t2;
+            return obj3;
+        }
+        
+        new1 operator % (new1 obj4)
+        {
+            new1 obj3(0,0);
+            obj3.t1 = this->t1 % obj4.t1;
+            obj3.t2 = this->t2 % obj4.t2;
+            return obj3;
+        }
+        
+        new1 operator / (new1 obj5)
+        {
+            new1 obj3(0,0);
+            obj3.t1 = this->t1 / obj5.t1;
+            obj3.t2 = this->t2 / obj5.t2;
+            return obj3;
+        }
+};
+
+int main() {
+    new1 obj1(3,4);
+    new1 obj2(7,16);
+    new1 obj3 = obj1 + obj2;
+    
+    cout << "operated + out : " << obj3.t1 << "   " << obj3.t2 << endl;
+    
+    new1 obj5 = obj3 % obj1;
+	
+	cout << "operated % out : " << obj5.t1 << "   " << obj5.t2 << endl;
+	
+	new1 obj6 = obj3 / obj1;
+	
+	cout << "operated / out : " << obj6.t1 << "   " << obj6.t2 << endl;
+	return 0;
+}
