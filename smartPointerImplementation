@@ -1,0 +1,105 @@
+//https://www.codeproject.com/Articles/15351/Implementing-a-simple-smart-pointer-in-c
+#include <iostream>
+using namespace std;
+
+class person
+{
+    public :
+        int age;
+        string name;
+        person(int a, string n) : age(a), name(n) { }
+        void display() { cout << "age = " << age << "  " << " name = " << name <<endl; }
+};
+
+class refCount
+{
+    public :
+        int count;
+        void addRef()
+        {
+            count++;
+        }
+        int release()
+        {
+            count--;
+            return count;
+        }
+};
+
+template <typename T> class SP
+{
+    public :
+        T* pData;
+        refCount* reference;
+
+        SP() : pData(0), reference(0) {
+            reference = new refCount();
+            reference->addRef();
+        }
+        SP(T* pValue) : pData(pValue),reference(0) {
+            reference = new refCount();
+            reference->addRef();
+        }
+        ~SP() {
+            cout << "Insdie destructor : ";
+            //int cur = reference->release();
+            cout << "cur : " << reference->count << endl;
+            if(reference->release() <= 0)
+            {
+                delete pData; 
+                delete reference;
+            }
+        }
+        
+        T& operator * ()
+        {
+           return *pData; 
+        }
+        
+        T* operator -> ()
+        {
+            return pData;
+        }
+        SP(SP<T>& temp)
+        {
+            pData = temp.pData;
+            reference = temp.reference;
+            reference->addRef();
+        }
+        SP<T>& operator = (SP<T>& temp)
+        {
+            if(this != &temp)
+            {
+                if(reference->count == 0)
+                {
+                    delete pData;
+                    delete reference;
+                }
+            }
+            pData = temp.pData;
+            reference = temp.reference;
+            reference->addRef();
+            return *this;
+        }
+    
+};
+
+int main() {
+    /*person* val = new person(41,"tarun");
+	SP<person> *obj = new SP<person>(val);
+	obj->display();*/
+	
+	SP<person> obj1 (new person(41,"tarun"));
+	obj1->display();
+	
+	/*SP<person> *obj3(person(*obj1));
+	///obj3.display();*/
+	
+	/*SP<person> obj4 = obj1;
+	obj4->display();*/
+	SP<person> obj5;
+	obj5 = obj1;
+	cout << "After equal opearot :";
+    obj5->display();
+	return 0;
+}
