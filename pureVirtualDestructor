@@ -1,0 +1,30 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class B1
+{
+    public :
+        B1() { cout << " B1 constructor" << endl; }
+        virtual ~B1() = 0;
+        
+};
+
+B1::~B1() { cout << " B1 destructor" << endl; }
+
+class D1 : public B1
+{
+    public :
+        D1() { cout << "D1 constructor" << endl; }
+        ~D1() { cout << "D1 destructor" << endl; }
+};
+int main()
+{
+    //B1 obj1;
+    D1 obj2;
+    
+    //B1* obj3 = new B1();
+    B1* obj4 = new D1();
+    delete obj4;
+    
+}
