@@ -1,0 +1,57 @@
+//https://medium.com/swlh/c-smart-pointers-and-how-to-write-your-own-c0adcbdce04f
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+template <class T> class my_unique_ptr
+{
+    public :
+        T* p_data;
+        my_unique_ptr() : p_data(nullptr) { }
+        my_unique_ptr(T* p_value) : p_data(p_value) { }
+        
+        my_unique_ptr(const my_unique_ptr& temp) = delete;
+        my_unique_ptr& operator = (const my_unique_ptr& temp) = delete;
+        
+        my_unique_ptr(const my_unique_ptr&& temp)
+        {
+            this->p_data = temp.p_data;
+            temp.p_data = nullptr;
+        }
+        
+        void operator = (const my_unique_ptr&& temp)
+        {
+            this->p_data = temp.p_data;
+            temp.p_data = nullptr;
+        }
+        
+        T& operator * ()
+        {
+            return *p_data;
+        }
+        T* operator -> ()
+        {
+            return p_data;
+        }
+        
+        ~my_unique_ptr()
+        {
+            if(p_data != nullptr)
+                delete p_data;
+        }
+        
+};
+
+class Box
+{
+    public :
+        int len, width, area;
+        
+    
+};
+
+int main()
+{
+    my_unique_ptr<Box> obj1(new Box());
+    return 0;
+}
