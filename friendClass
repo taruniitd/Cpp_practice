@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+class B1
+{
+    private :
+    int i;
+    protected :
+    int j;
+    public:
+    int k;
+        B1() : i(2), j(3), k(4) { }
+    friend class B2;    
+};
+
+class B2 
+{
+    public :
+        void func(B1& obj1)
+        {
+            //Now You can access private and protected members from this friend class too
+            cout << obj1.i << "  " << obj1.j << "   " << obj1.k << endl;
+        }
+};
+
+int main() {
+	// your code goes here
+	B1 obj3;
+	B2 obj2;
+	obj2.func(obj3);
+	return 0;
+}
