@@ -1,6 +1,8 @@
+//https://www.geeksforgeeks.org/friend-class-function-cpp/
 #include <iostream>
 using namespace std;
 
+class B2;
 class B1
 {
     private :
@@ -10,7 +12,8 @@ class B1
     public:
     int k;
         B1() : i(2), j(3), k(4) { }
-    friend class B2;    
+    friend class B2;   
+    friend void f_func(B1, B2);
 };
 
 class B2 
@@ -18,15 +21,20 @@ class B2
     public :
         void func(B1& obj1)
         {
-            //Now You can access private and protected members from this friend class too
             cout << obj1.i << "  " << obj1.j << "   " << obj1.k << endl;
         }
+        friend void f_func(B1, B2);
 };
 
+void f_func(B1 obj1, B2 obj2)
+{
+    obj2.func(obj1);
+}
 int main() {
 	// your code goes here
 	B1 obj3;
 	B2 obj2;
 	obj2.func(obj3);
+	f_func(obj3, obj2);
 	return 0;
 }
