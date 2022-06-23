@@ -24,11 +24,44 @@ class B2
             cout << obj1.i << "  " << obj1.j << "   " << obj1.k << endl;
         }
         friend void f_func(B1, B2);
+        
+        void func2()
+        {
+            cout << "check inherit :" << endl;
+        }
+};
+
+class D2 : public B2
+{
+    private :
+        void func4()
+        {
+            cout << "My friend is also use" << endl;
+        }
+    public :
+        void d_func(B1 obj1,B2 obj2)
+        {
+            //func2();
+            f_func(obj1, obj2);
+        }
+        
+        /*void func_inherted(B1& obj1)
+        {
+            cout << obj1.i << "  " << obj1.j << "   " << obj1.k << endl;
+        }*/
+        
+        friend void f_func(B1 obj1, D2 obj4 /*B2 obj2*/);
 };
 
 void f_func(B1 obj1, B2 obj2)
 {
     obj2.func(obj1);
+}
+
+void f_func(B1 obj1, D2 obj4 /*B2 obj2*/)
+{
+    //obj2.func(obj1);
+    obj4.func4();
 }
 int main() {
 	// your code goes here
@@ -36,5 +69,11 @@ int main() {
 	B2 obj2;
 	obj2.func(obj3);
 	f_func(obj3, obj2);
+	D2 obj4;
+	obj4.d_func(obj3,obj2);
+	obj4.func2();
+	obj4.func(obj3);
+	//obj4.func_inherted(obj3);
+	f_func(obj3,obj4);
 	return 0;
 }
