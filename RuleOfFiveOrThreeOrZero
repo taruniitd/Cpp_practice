@@ -1,0 +1,74 @@
+//https://en.cppreference.com/w/cpp/language/rule_of_three
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+const std::string NOT_A_STRING = "";
+class B1
+{
+    public:
+        int b;
+        string str;
+        B1() = default;//delete;
+        B1(int bb, string new_str) : b(bb), str(new_str) 
+        {
+        
+            cout << "addr of str = " << &str <<endl;
+        }
+        
+        //B1(const B1& tempObj) = default;
+        B1(const B1& tempObj)
+        {
+            this->b = tempObj.b;
+            this->str = "Vicky";//tempObj.str;
+            cout << "addr of copy str = " << &str  <<endl;
+        }
+        B1& operator = (const B1& tempObj)
+        {
+            b = tempObj.b;
+            str = "VickyM";//tempObj.str;
+            cout << "addr of copy assign str = " << &str <<endl;
+            return *this;
+        }
+        //Move Constructor
+        B1(B1&& tempObj) noexcept
+        {
+            this->b = tempObj.b;
+            this->str = tempObj.str;
+            tempObj.str.clear();
+            //tempObj.str = tempObj.str.clear();//NOT_A_STRING;//nullptr;
+            //this->str(std::exchange(tempObj.str, NOT_A_STRING));
+        }
+        
+        B1& operator = (B1&& tempObj) noexcept
+        {
+            this->b = tempObj.b;
+            std::swap(this->str, tempObj.str);
+            return *this;
+        }
+        
+};
+
+int main() {
+    B1 obj1(2,"tarun");
+    //obj1.b =2;
+    //obj1.str = "tarun";
+    B1 obj2 = obj1;
+    cout << "After default copy assignment operator : " << endl;
+    cout << obj2.b  << "   " << obj2.str <<endl;
+    
+    B1 obj3;
+    obj3 = obj1;
+    cout << "After copy assignment operation : " << endl;
+    cout << obj3.b << "  " << obj3.str << endl;
+    
+    B1 obj4(std::move(obj1));
+    cout << "After move constructor opeartion : " << endl;
+    cout << obj4.b << "  " << obj4.str << endl;
+    cout << "Old obj : " << obj1.b << "  " << obj1.str <<endl;
+    
+    obj2 = std::move(obj3);
+    cout << "After move assignment operator : " << endl;
+    cout << obj1.b << "    " << obj1.str <<endl;
+    cout << "Old obj : " << obj3.b << "   " << obj3.str << endl;
+    return 0;
+}
