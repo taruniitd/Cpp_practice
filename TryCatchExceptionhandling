@@ -1,0 +1,47 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class B1
+{
+    public:
+        B1() 
+        {
+            cout << "Inside B1 constructor " << endl;
+        }
+        ~B1() { }
+};
+
+class D1
+{
+    B1* objb1;
+    public :
+        D1()
+        {
+            objb1 = new B1();
+            cout << "inside D1 constructor " << endl;
+            throw "derived D1 throw exception";
+        }
+        ~D1() { }
+};
+int main()
+{
+    try
+    {
+        D1* objd1 = new D1;
+    }
+    catch (const char* e)
+    {
+        cout << "heap type exception : " << e << endl;
+    }
+    
+    try
+    {
+        D1 objd2;
+    }
+    catch (const char* e)
+    {
+        cout << "stack type exception : " << e << endl;
+    }
+    return 0;
+}
