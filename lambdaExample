@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	auto sum = [](auto a, auto b) {
+	    return a+b;
+	};
+	cout << "sum = " << sum(3.7,4);
+	
+	int x = 4;
+	auto y = [&r = x, x = x+1] ()->int{
+	    r+=2;
+	    return x+2;
+	}();
+	cout << "use c++14 having y = " << y << endl;
+	return 0;
+}
