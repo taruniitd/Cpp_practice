@@ -1,0 +1,77 @@
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+//protected and non-virtual destructor
+//public and virtual destructor
+//destrcutor call of composition object
+class A1{
+    public :
+        int a;
+        A1()
+        {
+            cout << "constructor of A1" << endl;
+        }
+        //private :
+        ~A1()
+        {
+            cout << "destructor of A1" << endl;
+        }
+};
+class B1
+{
+    public:
+    A1 obj_a1;  
+    B1()
+    {
+        cout << "constructor of B1 called " << endl;
+    }
+    protected:
+    virtual ~B1() { };//= default;
+    /*{
+        cout << "destructor of B1 called " << endl;
+    }*/
+};
+
+class D1 : public B1
+{
+    public:
+        //A1 obj_a2;
+    D1()
+    {
+        cout << "constructor of D1 called " << endl;
+    }
+    ~D1()
+    {
+        cout << "destructor of D1 called " << endl;
+    }
+};
+
+class B2
+{
+    public:
+    ~B2()
+    {
+        cout << "Inside B2 destructor" << endl;
+    }
+};
+class D2 : public B2
+{
+    public:
+        ~D2()
+        {
+            cout << "Inside D2 destructor" << endl;
+        }
+};
+int main()
+{
+    //B1 objb1;
+    D1 objd1;
+    //D1 *ptr = new D1;
+    //delete ptr;
+    //B1 *ptr = new D1;
+    //delete ptr;
+    B2 *objb2 = new D2;
+    delete objb2;
+    return 0;
+}
