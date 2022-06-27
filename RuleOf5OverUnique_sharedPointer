@@ -1,0 +1,53 @@
+//https://en.cppreference.com/w/cpp/language/rule_of_three
+//https://cpppatterns.com/patterns/rule-of-zero.html#:~:text=The%20rule%20of%20zero%20states,the%20appropriate%20copy%2Fmove%20semantics.
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class B2
+{
+    public:
+        std::unique_ptr<int> ptr = make_unique<int>(5);
+        
+};
+
+class B3
+{
+    public :
+        std::shared_ptr<int> ptr = make_shared<int>(6);
+};
+int main() {
+    B2 obj2_1;
+    B2 obj2_2 = std::move(obj2_1);
+    //cout << "1st unique_ptr val : " << *(obj2_1.ptr) <<endl;
+    cout << "2nd unique_ptr val : " << *(obj2_2.ptr) <<endl;
+    B2 obj2_3;
+    obj2_3 = std::move(obj2_2);
+    //cout << "2nd unique_ptr val : " << *(obj2_2.ptr) <<endl;
+    cout << "3rd unique_ptr val : " << *(obj2_3.ptr) <<endl;
+    
+    B3 obj3_1;
+    B3 obj3_2 = obj3_1;
+    cout << "After copy constructor for shared ptr : " << endl;
+    cout << *obj3_1.ptr  << "   " << *obj3_2.ptr << endl;
+    
+    B3 obj3_3;
+    obj3_3 = obj3_2;
+    cout << "after copy assigment operator for shared ptr : " << endl;
+    cout << *obj3_2.ptr << "   " << *obj3_3.ptr << endl;
+    
+    cout << "all ptr addr : " << obj3_1.ptr.get()  <<"  " << obj3_2.ptr.get() << "  " << obj3_3.ptr.get() << endl;
+    cout << "ref count : " << obj3_1.ptr.use_count()  <<"  " << obj3_2.ptr.use_count() << "  " << obj3_3.ptr.use_count() << endl; 
+    
+    B3 obj3_4 = std::move(obj3_3);
+    cout << "after move constructor operation :" << endl;
+    cout << "ptr addr : " << obj3_3.ptr.get() << "    " << obj3_4.ptr.get() << endl;
+    cout << "ref count : " << obj3_3.ptr.use_count() << "   " << obj3_4.ptr.use_count() << endl;
+    
+    B3 obj3_5;
+    obj3_5 = std::move(obj3_2);
+    cout << "After move assigment operation : " << endl;
+    cout << "ptr addr : " << obj3_2.ptr.get() << "  " << obj3_5.ptr.get() << endl;
+    cout << "ref count : " << obj3_2.ptr.use_count() << "  " << obj3_5.ptr.use_count() << endl;
+    return 0;
+}
