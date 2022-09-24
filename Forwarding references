@@ -1,0 +1,56 @@
+//https://github.com/AnthonyCalandra/modern-cpp-features#forwarding-references
+/*
+T& & becomes T&
+T& && becomes T&
+T&& & becomes T&
+T&& && becomes T&&
+auto type deduction with lvalues and rvalues:
+
+int x = 0; // `x` is an lvalue of type `int`
+auto&& al = x; // `al` is an lvalue of type `int&` -- binds to the lvalue, `x`
+auto&& ar = 0; // `ar` is an lvalue of type `int&&` -- binds to the rvalue temporary, `0`
+*/
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+using namespace std;
+/*void f(int& x) {
+    cout << "Inside f(int& x) " << endl;
+}*/
+
+//3 types
+//This type will not deduce for all types
+/*void f(int&& x) {
+    cout << "Inside f(int&& x) " << endl;
+}*/
+
+
+//Below 2 ways can used for all type of deductions
+// Since C++14 or later:
+void f(auto&& t) {
+    cout << "Inside f(int&& x) " << "  " << t << "  " << endl;
+}
+
+// Since C++11 or later:
+/*template <typename T>
+void f(T&& t) {
+    cout << "Inside f(int&& x) " << endl;
+}*/
+
+int main(){
+
+    
+    
+int x = 0;
+f(0); // T is int, deduces as f(int &&) => f(int&&)
+f(x); // T is int&, deduces as f(int& &&) => f(int&)
+
+int& y = x;
+f(y); // T is int&, deduces as f(int& &&) => f(int&)
+
+int&& z = 2; // NOTE: `z` is an lvalue with type `int&&`.
+f(z); // T is int&, deduces as f(int& &&) => f(int&)
+f(std::move(z)); // T is int, deduces as f(int &&) => f(int&&)
+    return 0;
+}
