@@ -1,0 +1,37 @@
+//https://github.com/AnthonyCalandra/modern-cpp-features#initializer-lists
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+#include <numeric>
+using namespace std;
+
+/*template <typename First, typename... Args>
+auto sum(const First first, const Args... args) -> decltype(first) {
+  const auto values = {first, args...};
+  return std::accumulate(values.begin(), values.end(), First{0});
+}*/
+
+int sum(const std::initializer_list<int>& list) {
+  int total = 0;
+  for (auto& e : list) {
+    total += e;
+  }
+
+  return total;
+}
+
+int main(){
+
+/*cout << sum(1, 2, 3, 4, 5); // 15
+cout << endl;
+sum(1, 2, 3);       // 6
+cout << sum(1.5, 2.0, 3.7); // 7.2    
+*/ 
+auto list = {1, 2, 3};
+cout << sum(list) << endl; // == 6
+cout << sum({1, 2, 3}) << endl; // == 6
+cout << sum({}) << endl; // == 0 
+
+    return 0;
+}
