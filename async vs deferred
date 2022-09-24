@@ -1,0 +1,20 @@
+//https://www.youtube.com/watch?v=NlVyBuuxG4I
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+using namespace std;
+void asyncFunc()
+{
+    cout << "async thread inside : " << this_thread::get_id() << endl;
+    cout << "Iam inside asyncFunc " << endl;    
+}
+
+int main(){
+    cout << "Main thread inside : " << this_thread::get_id() << endl;
+    //future<void> fn = async(launch::async, asyncFunc); //async runs in separate thread
+    future<void> fn = async(launch::deferred, asyncFunc); //async alse gets called in main thread only
+    //future<void> fn = async(launch::any, asyncFunc);
+    fn.get();
+    return 0;
+}
