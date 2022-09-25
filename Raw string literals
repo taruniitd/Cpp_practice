@@ -1,0 +1,25 @@
+//https://github.com/AnthonyCalandra/modern-cpp-features#raw-string-literals
+//R"delimiter(raw_characters)delimiter"
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+#include <numeric>
+#include <vector>
+using namespace std;
+
+
+
+int main()
+{
+
+    const char* msg1 = "\nHello,\n\tworld!\n";
+const char* msg2 = R"(
+Hello,
+	world!
+)";
+
+cout << msg2 << "  " << endl;
+cout << msg1 << "  " << endl;
+    return 0;
+}
