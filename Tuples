@@ -1,0 +1,11 @@
+//https://github.com/AnthonyCalandra/modern-cpp-features#tuples
+int main()
+{
+
+
+auto playerProfile = std::make_tuple(51, "Frans Nielsen", "NYI");
+cout << std::get<0>(playerProfile) << endl; // 51
+cout << std::get<1>(playerProfile) << endl; // "Frans Nielsen"
+cout << std::get<2>(playerProfile) <<endl ; // "NYI"
+    return 0;
+}
