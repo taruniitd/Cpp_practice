@@ -1,0 +1,17 @@
+//https://github.com/AnthonyCalandra/modern-cpp-features#type-aliases
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+#include <numeric>
+#include <vector>
+using namespace std;
+
+template <typename T>using Vec = std::vector<T>;
+using String = std::string;
+int main(){
+    Vec<int> v; // std::vector<int>
+    String s {"foo"};
+    cout << s << endl;
+return 0;
+}
