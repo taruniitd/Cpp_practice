@@ -1,0 +1,33 @@
+//https://iamsorush.com/posts/weak-pointer-cpp/
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+#include <numeric>
+#include <vector>
+using namespace std;
+
+struct Person{
+    string Name;
+    Person(string n):Name(n){}
+};
+
+int main(){
+
+    // initial state
+    auto teacher = make_shared<Person>("Jack");
+    auto coach = teacher;
+    weak_ptr<Person> wp = teacher;
+
+    if (auto temp = wp.lock())
+        cout<< temp-> Name; //  Jack
+    
+    // coach is reset
+    coach.reset();
+
+    // teacher is reset to Rose
+    teacher.reset(new Person("Rose"));
+
+    if (wp.expired()) // true
+        cout<< "The old teacher is not there."; 
+}
